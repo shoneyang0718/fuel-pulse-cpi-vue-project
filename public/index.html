@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>油價脈動 | 個人化 CPI 追蹤</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-text">
+        <span class="badge">個人化 CPI 追蹤</span>
+        <h1>油價脈動：你的個人 CPI</h1>
+        <p>
+          追蹤影響你日常油費的價格，建立真正貼近生活的 CPI。
+        </p>
+      </div>
+      <div class="hero-card">
+        <div>
+          <p class="hero-label">焦點</p>
+          <p class="hero-value">日常燃油</p>
+        </div>
+        <div>
+          <p class="hero-label">指標</p>
+          <p class="hero-value">你的通膨趨勢線</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <h2>新增價格紀錄</h2>
+        <p class="muted">輸入你實際支付的價格，讓 CPI 更貼近生活。</p>
+        <form id="entry-form" class="form-grid">
+          <label class="field">
+            <span>日期</span>
+            <input id="date" type="date" required />
+          </label>
+          <label class="field">
+            <span>品項名稱</span>
+            <input
+              id="item"
+              type="text"
+              placeholder="例如：95 無鉛"
+              required
+            />
+          </label>
+          <label class="field">
+            <span>價格 (NT$)</span>
+            <input
+              id="price"
+              type="number"
+              min="0"
+              step="0.1"
+              placeholder="33.4"
+              required
+            />
+          </label>
+          <button class="btn" type="submit">儲存紀錄</button>
+        </form>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="panel">
+        <h2>近三個月通膨率</h2>
+        <p class="muted">
+          輸入日期與油品，系統會自動計算近三個月的通膨率。
+        </p>
+        <form id="inflation-form" class="form-grid">
+          <label class="field">
+            <span>查詢日期</span>
+            <input id="inflation-date" type="date" required />
+          </label>
+          <label class="field">
+            <span>汽油種類</span>
+            <select id="fuel-type" required>
+              <option value="unleaded92">92 無鉛</option>
+              <option value="unleaded95" selected>95 無鉛</option>
+              <option value="unleaded98">98 無鉛</option>
+              <option value="diesel">柴油</option>
+            </select>
+          </label>
+          <button class="btn" type="submit">計算通膨率</button>
+        </form>
+        <div
+          id="inflation-result"
+          class="inflation-result"
+          role="status"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>價格歷史</h2>
+            <p class="muted">可依日期或品項篩選。</p>
+          </div>
+          <label class="search">
+            <span>快速搜尋</span>
+            <input id="search" type="search" placeholder="例如：柴油" />
+          </label>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">紀錄筆數</span>
+            <span id="stat-count" class="stat-value">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">最新價格</span>
+            <span id="stat-latest" class="stat-value">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">平均價格</span>
+            <span id="stat-average" class="stat-value">--</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>品項</th>
+                <th>價格</th>
+              </tr>
+            </thead>
+            <tbody id="price-rows"></tbody>
+          </table>
+        </div>
+        <p id="empty-state" class="empty-state">尚無紀錄。</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      本網站用於個人化 CPI 作業，資料儲存在本機 SQLite。
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
