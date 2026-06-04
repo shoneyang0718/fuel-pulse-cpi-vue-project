@@ -14,8 +14,23 @@ const fuelLabels = {
 };
 
 const calculateInflation = async () => {
+  const isStaticPreview = window.location.hostname.endsWith("github.io");
   error.value = '';
   result.value = null;
+
+  if (isStaticPreview) {
+    // 提供模擬資料以供預覽
+    result.value = {
+      type: selectedFuel.value,
+      startDate: "2026-03-11",
+      endDate: date.value,
+      startPrice: 31.0,
+      endPrice: 33.9,
+      inflationRate: 9.35,
+      note: "預覽模式：顯示模擬數據。"
+    };
+    return;
+  }
 
   try {
     const res = await fetch(`/api/inflation?date=${date.value}&type=${selectedFuel.value}`);
