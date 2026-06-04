@@ -21,6 +21,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.static(path.join(__dirname, "public")));
 
 function toNumber(text) {
